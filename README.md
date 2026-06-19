@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Resto — QR Ordering System
 
-## Getting Started
+A cute, mobile-first **scan-to-order** template for restaurants, cafés, shabu and steak houses.
+Customers scan a table QR → browse the menu → order → the order appears on the **kitchen display** in real time. Owners manage the menu and tables (with auto-generated QR codes) from a simple admin.
 
-First, run the development server:
+One template, four ready-made business presets: **Shabu · Café · Steak · Restaurant**.
+
+> เทมเพลตระบบสั่งอาหารผ่าน QR แบบตี๋น้อย — สแกนโต๊ะ สั่งอาหาร ออเดอร์เด้งเข้าครัวทันที พร้อมหลังบ้านจัดการเมนู/โต๊ะ/QR เปลี่ยนเป็นร้านชาบู สเต็ก คาเฟ่ หรือร้านอาหารได้ในคลิกเดียว
+
+## Features
+
+- 📱 **Customer** — scan table QR, browse by category, add to cart, place order, track status
+- 👨‍🍳 **Kitchen (KDS)** — real-time order board, advance status (new → cooking → ready → served)
+- ⚙️ **Admin** — full CRUD for menu items (price, category, emoji, popular, in/out of stock) and tables (auto QR code per table, print-ready)
+- 🎨 **Multi-business** — switch between shabu / café / steak / restaurant; colors, name and seed menu all change
+- 🔔 **Realtime, no backend** — orders sync across tabs/devices on the same browser via `BroadcastChannel` + `localStorage` (demo mode). Designed to swap to Supabase/Postgres for production multi-device realtime.
+- 📐 Mobile-first, responsive, rounded & playful UI
+
+## Quick start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000>:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `/` — pick a role (customer / kitchen / admin)
+- `/menu?table=t1` — customer menu for table 1 (this is what a QR points to)
+- `/kitchen` — kitchen display
+- `/admin` — dashboard · `/admin/menu` · `/admin/tables`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> Tip: open `/kitchen` in one tab and `/menu?table=t1` in another, then place an order — it pops into the kitchen instantly.
 
-## Learn More
+## Make it yours
 
-To learn more about Next.js, take a look at the following resources:
+Edit **`src/config/restaurant.config.ts`** — branding, theme colors, categories and the seed menu for each business preset. Set `DEFAULT_BUSINESS` to your shop type. Everything else (menu items, tables) is then editable live from the admin.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Going to production (real multi-device realtime)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Demo mode stores data per-browser. For a real shop where the kitchen runs on a different device than customers, swap the data layer in `src/store/useStore.ts` for a hosted database with realtime (Supabase Postgres recommended): keep the same action names (`placeOrder`, `setOrderStatus`, …) and back them with Supabase tables + realtime channels.
 
-## Deploy on Vercel
+## Tech
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Next.js (App Router) · TypeScript · Tailwind CSS v4 · Zustand · qrcode.react
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+Part of the **GAT** template line.
