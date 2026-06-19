@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/components/providers/AppProvider";
+import { DemoBadge } from "@/components/layout/DemoBadge";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="th" className={geistSans.variable}>
       <body className="min-h-screen">
         <AppProvider>{children}</AppProvider>
+        <DemoBadge />
       </body>
     </html>
   );
